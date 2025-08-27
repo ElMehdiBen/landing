@@ -8,19 +8,90 @@
       ]">
         <!-- Single Flip Icon Button (visible on both sides) -->
         <button @click="flipContainer"
-          class="absolute top-6 right-6 z-30 w-12 h-12 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 hover:bg-gray-50 hover:scale-105">
-          <Icon name="arrow-right" class="w-5 h-5 text-gray-600" />
+          :class="[
+            'absolute top-6 right-6 z-30 w-12 h-12 rounded-xl shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 hover:scale-105',
+            isContainerFlipped 
+              ? 'bg-white bg-opacity-20 border border-white border-opacity-30 hover:bg-opacity-30' 
+              : 'bg-gray-900 border border-gray-800 hover:bg-gray-800'
+          ]">
+          <Icon
+            name="arrow-right"
+            class="w-5 h-5 transition-transform duration-300"
+            :class="isContainerFlipped ? 'text-gray-900' : 'text-white'"
+          />
         </button>
-        <!-- Front of main container (Default - Empty Canvas) -->
+        <!-- Front of main container (Profile Layout) -->
         <div
-          class="absolute inset-0 w-full h-full bg-blue-100 rounded-2xl shadow-lg backface-hidden flex flex-col justify-center items-center p-8">
-          <div class="text-center">
-            <div class="w-16 h-16 bg-yellow-400 rounded-xl flex items-center justify-center mx-auto mb-6">
-              <Icon name="star" class="w-8 h-8 text-white" />
+          class="absolute inset-0 w-full h-full bg-white rounded-2xl shadow-lg backface-hidden flex p-12">
+          <div class="flex w-full h-full">
+            <!-- Profile Image - Takes up left side -->
+            <div class="flex-shrink-0 w-2/5 pr-12 flex items-center">
+              <div class="w-full aspect-square bg-gradient-to-br from-amber-900 via-amber-800 to-amber-700 rounded-2xl overflow-hidden shadow-xl">
+                <div class="w-full h-full bg-gradient-to-br from-black/20 to-black/40 flex items-center justify-center">
+                  <div class="text-center text-white">
+                    <div class="w-32 h-32 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Icon name="user" class="w-16 h-16 text-white" />
+                    </div>
+                    <p class="text-xl font-medium">Professional Portrait</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h2 class="text-2xl font-bold mb-4 text-gray-900">Empty Canvas</h2>
-            <p class="text-gray-600 text-lg leading-relaxed max-w-md">This is your empty dashboard. Click the settings
-              icon to reveal the full interface.</p>
+
+            <!-- Profile Information - Takes up right side -->
+            <div class="flex-1 flex flex-col justify-center">
+              <!-- Header with Plus Icon -->
+              <div class="flex items-center mb-8">
+                <div class="w-7 h-7 bg-gray-900 rounded flex items-center justify-center mr-4">
+                  <span class="text-white text-sm font-bold">+</span>
+                </div>
+                <span class="text-gray-900 font-semibold text-lg">About Me</span>
+              </div>
+
+              <!-- Name -->
+              <h1 class="text-5xl font-bold text-gray-900 mb-8 leading-tight">David Giant ®</h1>
+
+              <!-- Description -->
+              <p class="text-gray-600 leading-relaxed mb-10 text-lg">
+                David is a licensed CPA based in California, backed by years of experience in tax advisory, 
+                financial planning, and business structuring. With a deep understanding of California state 
+                laws and federal tax regulations, David is committed to offering transparent, compliant, 
+                and strategic financial guidance for both individuals and corporations.
+              </p>
+
+              <!-- Read My Full Story Button -->
+              <button class="inline-flex items-center px-8 py-4 bg-gray-900 text-white rounded-full font-semibold hover:bg-gray-800 transition-colors mb-12 text-lg w-fit">
+                Read My Full Story
+                <div class="ml-3 w-7 h-7 bg-white/20 rounded-full flex items-center justify-center">
+                  <Icon name="arrow-right" class="w-4 h-4 text-white" />
+                </div>
+              </button>
+
+              <!-- Info Cards -->
+              <div class="flex space-x-8">
+                <!-- License Number Card -->
+                <div class="bg-gray-50 rounded-2xl p-6 flex-1">
+                  <div class="flex items-center mb-3">
+                    <div class="w-6 h-6 bg-gray-400 rounded mr-3 flex items-center justify-center">
+                      <Icon name="cog" class="w-4 h-4 text-white" />
+                    </div>
+                  </div>
+                  <h3 class="font-semibold text-gray-900 mb-2 text-lg">License Number</h3>
+                  <p class="text-gray-600">California CPA #54337</p>
+                </div>
+
+                <!-- Location Card -->
+                <div class="bg-gray-50 rounded-2xl p-6 flex-1">
+                  <div class="flex items-center mb-3">
+                    <div class="w-6 h-6 bg-gray-400 rounded mr-3 flex items-center justify-center">
+                      <Icon name="globe" class="w-4 h-4 text-white" />
+                    </div>
+                  </div>
+                  <h3 class="font-semibold text-gray-900 mb-2 text-lg">Location</h3>
+                  <p class="text-gray-600">Newport Beach, CA</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -214,7 +285,7 @@ import Icon from './components/Icons.vue'
 
 interface IconData {
   id: number
-  iconName: 'home' | 'user' | 'cog' | 'heart' | 'lightbulb' | 'star' | 'globe' | 'x-mark' | 'arrow-right' | 'arrow-left'
+  iconName: 'home' | 'user' | 'cog' | 'heart' | 'lightbulb' | 'star' | 'globe' | 'x-mark' | 'arrow-right'
   title: string
   description: string
   position: string

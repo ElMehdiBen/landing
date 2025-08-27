@@ -27,15 +27,12 @@
 
     <!-- Arrow Right Icon -->
     <path v-if="name === 'arrow-right'" stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-
-    <!-- Arrow Left Icon -->
-    <path v-if="name === 'arrow-left'" stroke-linecap="round" stroke-linejoin="round" d="M11 15l-3-3m0 0l3-3m-3 3h8m3 0a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6a2 2 0 012-2" />
   </svg>
 </template>
 
 <script setup lang="ts">
 interface Props {
-  name: 'home' | 'user' | 'cog' | 'heart' | 'lightbulb' | 'star' | 'globe' | 'x-mark' | 'arrow-right' | 'arrow-left'
+  name: 'home' | 'user' | 'cog' | 'heart' | 'lightbulb' | 'star' | 'globe' | 'x-mark' | 'arrow-right'
   class?: string
 }
 
