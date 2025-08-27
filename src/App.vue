@@ -1,110 +1,114 @@
 <template>
   <div class="h-screen w-screen bg-white text-gray-800 overflow-hidden relative p-5">
-    <!-- Main Container -->
-    <div class="h-full w-full bg-blue-100 rounded-2xl shadow-lg relative">
-      <!-- Main Content -->
-      <div class="relative z-10 h-full w-full flex flex-col">
-      <!-- Top Section - Cards and Modal Buttons -->
-      <div class="flex-1 flex justify-between px-8 py-12">
-        <!-- Left Side - Cards -->
-        <div class="flex flex-col justify-center space-y-6">
-          <div
-            v-for="card in cards"
-            :key="card.id"
-            class="relative w-80 h-48 cursor-pointer perspective-1000"
-            @click="flipCard(card.id)"
-          >
-            <div
-              :class="[
-                'relative w-full h-full transition-transform duration-700 transform-style-preserve-3d',
-                flippedCards.includes(card.id) ? 'rotate-y-180' : ''
-              ]"
-            >
-              <!-- Front of card -->
-              <div class="absolute inset-0 w-full h-full bg-white border border-gray-200 rounded-2xl shadow-sm backface-hidden flex flex-col justify-center items-start p-8 hover:shadow-md transition-shadow">
-                <div class="flex items-center mb-4">
-                  <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center mr-4">
-                    <Icon :name="card.iconName" class="w-5 h-5 text-white" />
-                  </div>
-                  <h3 class="text-xl font-semibold text-gray-900">{{ card.title }}</h3>
-                </div>
-                <p class="text-gray-500 text-sm">Click to explore details</p>
-              </div>
-              
-              <!-- Back of card -->
-              <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-gray-900 to-gray-700 text-white rounded-2xl shadow-sm backface-hidden rotate-y-180 flex flex-col justify-center items-start p-8">
-                <div class="flex items-center mb-4">
-                  <div class="w-8 h-8 bg-yellow-400 rounded-lg flex items-center justify-center mr-3">
-                    <Icon :name="card.iconName" class="w-4 h-4 text-white" />
-                  </div>
-                  <h3 class="text-lg font-semibold">{{ card.title }}</h3>
-                </div>
-                <p class="text-gray-300 text-sm leading-relaxed">{{ card.description }}</p>
-              </div>
+    <!-- Main Container with Flip Functionality -->
+    <div class="h-full w-full perspective-1000">
+      <div :class="[
+        'relative w-full h-full transition-transform duration-700 transform-style-preserve-3d',
+        isContainerFlipped ? 'rotate-y-180' : ''
+      ]">
+        <!-- Single Flip Icon Button (visible on both sides) -->
+        <button @click="flipContainer"
+          class="absolute top-6 right-6 z-30 w-12 h-12 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 hover:bg-gray-50 hover:scale-105">
+          <Icon name="arrow-right" class="w-5 h-5 text-gray-600" />
+        </button>
+        <!-- Front of main container (Default - Empty Canvas) -->
+        <div
+          class="absolute inset-0 w-full h-full bg-blue-100 rounded-2xl shadow-lg backface-hidden flex flex-col justify-center items-center p-8">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-yellow-400 rounded-xl flex items-center justify-center mx-auto mb-6">
+              <Icon name="star" class="w-8 h-8 text-white" />
             </div>
+            <h2 class="text-2xl font-bold mb-4 text-gray-900">Empty Canvas</h2>
+            <p class="text-gray-600 text-lg leading-relaxed max-w-md">This is your empty dashboard. Click the settings
+              icon to reveal the full interface.</p>
           </div>
         </div>
 
-        <!-- Right Side - Modal Buttons Column -->
-        <div class="flex flex-col justify-center space-y-6">
-          <div
-            v-for="icon in icons"
-            :key="icon.id"
-            :class="[
-              'cursor-pointer transition-all duration-300 hover:scale-105',
-              'animate-float'
-            ]"
-            :style="{ animationDelay: icon.delay }"
-            @click="openPopup(icon)"
-          >
-            <div class="w-16 h-16 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 hover:bg-gray-50">
-              <Icon :name="icon.iconName" class="w-6 h-6 text-gray-600" />
-            </div>
-          </div>
-        </div>
-      </div>
+        <!-- Back of main container (Dashboard Components) -->
+        <div
+          class="absolute inset-0 w-full h-full bg-gradient-to-br from-gray-900 to-gray-700 text-white rounded-2xl shadow-lg backface-hidden rotate-y-180">
 
-      <!-- Bottom Section - Side Panel Buttons Row -->
-      <div class="px-8 pb-8">
-        <div class="flex justify-center space-x-6">
-          <div
-            v-for="(panelButton, index) in panelButtons"
-            :key="panelButton.id"
-            :class="[
-              'cursor-pointer transition-all duration-300 hover:scale-105',
-              'animate-float'
-            ]"
-            :style="{ animationDelay: (index * 0.5) + 's' }"
-            @click="openSidePanel(panelButton)"
-          >
-            <div class="w-16 h-16 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 hover:bg-gray-50">
-              <Icon :name="panelButton.iconName" class="w-6 h-6 text-gray-600" />
+          <!-- Main Content -->
+          <div class="relative z-10 h-full w-full flex flex-col">
+            <!-- Top Section - Cards and Modal Buttons -->
+            <div class="flex-1 flex justify-between px-8 py-12">
+              <!-- Left Side - Cards -->
+              <div class="flex flex-col justify-center space-y-6">
+                <div v-for="card in cards" :key="card.id" class="relative w-80 h-48 cursor-pointer perspective-1000"
+                  @click="flipCard(card.id)">
+                  <div :class="[
+                    'relative w-full h-full transition-transform duration-700 transform-style-preserve-3d',
+                    flippedCards.includes(card.id) ? 'rotate-y-180' : ''
+                  ]">
+                    <!-- Front of card -->
+                    <div
+                      class="absolute inset-0 w-full h-full bg-white border border-gray-200 rounded-2xl shadow-sm backface-hidden flex flex-col justify-center items-start p-8 hover:shadow-md transition-shadow">
+                      <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center mr-4">
+                          <Icon :name="card.iconName" class="w-5 h-5 text-white" />
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">{{ card.title }}</h3>
+                      </div>
+                      <p class="text-gray-500 text-sm">Click to explore details</p>
+                    </div>
+
+                    <!-- Back of card -->
+                    <div
+                      class="absolute inset-0 w-full h-full bg-gradient-to-br from-gray-900 to-gray-700 text-white rounded-2xl shadow-sm backface-hidden rotate-y-180 flex flex-col justify-center items-start p-8">
+                      <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-yellow-400 rounded-lg flex items-center justify-center mr-3">
+                          <Icon :name="card.iconName" class="w-4 h-4 text-white" />
+                        </div>
+                        <h3 class="text-lg font-semibold">{{ card.title }}</h3>
+                      </div>
+                      <p class="text-gray-300 text-sm leading-relaxed">{{ card.description }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Side - Modal Buttons Column -->
+              <div class="flex flex-col justify-center space-y-6">
+                <div v-for="icon in icons" :key="icon.id" :class="[
+                  'cursor-pointer transition-all duration-300 hover:scale-105',
+                  'animate-float'
+                ]" :style="{ animationDelay: icon.delay }" @click="openPopup(icon)">
+                  <div
+                    class="w-16 h-16 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 hover:bg-gray-50">
+                    <Icon :name="icon.iconName" class="w-6 h-6 text-gray-600" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Section - Side Panel Buttons Row -->
+            <div class="px-8 pb-8">
+              <div class="flex justify-center space-x-6">
+                <div v-for="(panelButton, index) in panelButtons" :key="panelButton.id" :class="[
+                  'cursor-pointer transition-all duration-300 hover:scale-105',
+                  'animate-float'
+                ]" :style="{ animationDelay: (index * 0.5) + 's' }" @click="openSidePanel(panelButton)">
+                  <div
+                    class="w-16 h-16 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 hover:bg-gray-50">
+                    <Icon :name="panelButton.iconName" class="w-6 h-6 text-gray-600" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-        <!-- Popup Card -->
-    <Transition
-      name="popup"
-      enter-active-class="transition duration-300 ease-out"
-      enter-from-class="transform scale-95 opacity-0"
-      enter-to-class="transform scale-100 opacity-100"
-      leave-active-class="transition duration-200 ease-in"
-      leave-from-class="transform scale-100 opacity-100"
-      leave-to-class="transform scale-95 opacity-0"
-    >
-      <div
-        v-if="activeIcon"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-        @click="closePopup"
-      >
-        <div
-          class="bg-white text-black p-8 rounded-2xl max-w-md w-full mx-4 shadow-2xl border border-gray-200"
-          @click.stop
-        >
+    <!-- Popup Card -->
+    <Transition name="popup" enter-active-class="transition duration-300 ease-out"
+      enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
+      leave-active-class="transition duration-200 ease-in" leave-from-class="transform scale-100 opacity-100"
+      leave-to-class="transform scale-95 opacity-0">
+      <div v-if="activeIcon" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        @click="closePopup">
+        <div class="bg-white text-black p-8 rounded-2xl max-w-md w-full mx-4 shadow-2xl border border-gray-200"
+          @click.stop>
           <div class="flex items-center justify-between mb-6">
             <div class="flex items-center space-x-3">
               <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
@@ -112,24 +116,18 @@
               </div>
               <h2 class="text-xl font-semibold text-gray-900">{{ activeIcon.title }}</h2>
             </div>
-            <button
-              @click="closePopup"
-              class="text-gray-400 hover:text-gray-600 transition-colors"
-            >
+            <button @click="closePopup" class="text-gray-400 hover:text-gray-600 transition-colors">
               <Icon name="x-mark" class="w-6 h-6" />
             </button>
           </div>
           <p class="text-gray-600 leading-relaxed mb-6 text-sm">{{ activeIcon.description }}</p>
           <div class="flex space-x-3">
-            <button
-              @click="closePopup"
-              class="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm"
-            >
+            <button @click="closePopup"
+              class="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm">
               Close
             </button>
             <button
-              class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
-            >
+              class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm">
               Learn More
             </button>
           </div>
@@ -138,19 +136,12 @@
     </Transition>
 
     <!-- Side Panel -->
-    <Transition
-      name="slide"
-      enter-active-class="transition-transform duration-300 ease-out"
-      enter-from-class="transform translate-x-full"
-      enter-to-class="transform translate-x-0"
-      leave-active-class="transition-transform duration-300 ease-in"
-      leave-from-class="transform translate-x-0"
-      leave-to-class="transform translate-x-full"
-    >
-      <div
-        v-if="activePanelButton"
-        class="fixed top-6 right-6 bottom-6 w-96 bg-white shadow-2xl z-50 border-l border-gray-200 rounded-xl"
-      >
+    <Transition name="slide" enter-active-class="transition-transform duration-300 ease-out"
+      enter-from-class="transform translate-x-full" enter-to-class="transform translate-x-0"
+      leave-active-class="transition-transform duration-300 ease-in" leave-from-class="transform translate-x-0"
+      leave-to-class="transform translate-x-full">
+      <div v-if="activePanelButton"
+        class="fixed top-6 right-6 bottom-6 w-96 bg-white shadow-2xl z-50 border-l border-gray-200 rounded-xl">
         <div class="h-full flex flex-col">
           <!-- Panel Header -->
           <div class="flex items-center justify-between p-6 border-b border-gray-200">
@@ -163,10 +154,7 @@
                 <p class="text-xs text-gray-500">{{ activePanelButton.subtitle }}</p>
               </div>
             </div>
-            <button
-              @click="closeSidePanel"
-              class="text-gray-400 hover:text-gray-600 transition-colors"
-            >
+            <button @click="closeSidePanel" class="text-gray-400 hover:text-gray-600 transition-colors">
               <Icon name="x-mark" class="w-6 h-6" />
             </button>
           </div>
@@ -193,7 +181,8 @@
               <div class="bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl p-6 text-white">
                 <h3 class="text-sm font-medium mb-4">Performance Overview</h3>
                 <div class="h-32 flex items-end justify-between space-x-2">
-                  <div v-for="(bar, index) in activePanelButton.chartData" :key="index" class="bg-white bg-opacity-30 rounded-t" :style="{ height: bar + '%', width: '20px' }"></div>
+                  <div v-for="(bar, index) in activePanelButton.chartData" :key="index"
+                    class="bg-white bg-opacity-30 rounded-t" :style="{ height: bar + '%', width: '20px' }"></div>
                 </div>
               </div>
 
@@ -204,7 +193,8 @@
               </div>
 
               <!-- Action Button -->
-              <button class="w-full py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-colors text-sm font-medium">
+              <button
+                class="w-full py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-colors text-sm font-medium">
                 View Detailed Report
               </button>
             </div>
@@ -214,11 +204,7 @@
     </Transition>
 
     <!-- Overlay for side panel -->
-    <div
-      v-if="activePanelButton"
-      class="fixed inset-0 bg-black bg-opacity-25 z-40"
-      @click="closeSidePanel"
-    ></div>
+    <div v-if="activePanelButton" class="fixed inset-0 bg-black bg-opacity-25 z-40" @click="closeSidePanel"></div>
   </div>
 </template>
 
@@ -228,7 +214,7 @@ import Icon from './components/Icons.vue'
 
 interface IconData {
   id: number
-  iconName: 'home' | 'user' | 'cog' | 'heart' | 'lightbulb' | 'star' | 'globe' | 'x-mark'
+  iconName: 'home' | 'user' | 'cog' | 'heart' | 'lightbulb' | 'star' | 'globe' | 'x-mark' | 'arrow-right' | 'arrow-left'
   title: string
   description: string
   position: string
@@ -325,6 +311,7 @@ const icons = ref<IconData[]>([
 const activeIcon = ref<IconData | null>(null)
 const flippedCards = ref<number[]>([])
 const activePanelButton = ref<typeof panelButtons.value[0] | null>(null)
+const isContainerFlipped = ref(false)
 
 const flipCard = (cardId: number) => {
   if (flippedCards.value.includes(cardId)) {
@@ -332,6 +319,10 @@ const flipCard = (cardId: number) => {
   } else {
     flippedCards.value.push(cardId)
   }
+}
+
+const flipContainer = () => {
+  isContainerFlipped.value = !isContainerFlipped.value
 }
 
 const openPopup = (icon: IconData) => {
@@ -378,4 +369,4 @@ const closeSidePanel = () => {
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
-</style> 
+</style>
