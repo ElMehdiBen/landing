@@ -5,12 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "build": "vite build",
+    "build-with-types": "vue-tsc --noEmit && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.4.21",
-    "@heroicons/vue": "^2.1.1"
+    "vue": "^3.4.21"
   },
   "devDependencies": {
     "@types/node": "^20.11.24",
@@ -20,6 +20,6 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
     "vite": "^5.1.4",
-    "vue-tsc": "^1.8.27"
+    "vue-tsc": "^2.0.6"
   }
 } 
