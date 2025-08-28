@@ -19,11 +19,11 @@
       <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-2xl p-6 backface-hidden rotate-x-180 text-white">
         <div class="flex items-center mb-3">
           <div class="w-6 h-6 bg-white/20 rounded mr-3 flex items-center justify-center">
-            <Icon :name="info.iconName" class="w-4 h-4 text-white" />
+            <Icon :name="info.iconName" class="w-4 h-4 text-gray-900" />
           </div>
         </div>
-        <h3 class="font-semibold mb-2 text-lg">{{ info.title }}</h3>
-        <p class="text-white/90 text-sm leading-relaxed">{{ info.description }}</p>
+        <h3 class="font-semibold mb-2 text-lg text-gray-900">{{ info.title }}</h3>
+        <p class="text-gray-900 text-sm leading-relaxed">{{ info.description }}</p>
       </div>
     </div>
   </div>
