@@ -1,22 +1,24 @@
 <template>
   <div class="absolute inset-0 w-full h-full bg-white rounded-2xl shadow-lg backface-hidden flex p-12">
-    <div class="flex w-full h-full">
-      <!-- Profile Image - Takes up left side -->
-      <div class="flex-shrink-0 w-2/5 pr-12 flex items-center">
-        <div class="w-full aspect-square rounded-2xl overflow-hidden shadow-xl">
-          <div class="w-full h-full bg-gray-900 flex items-center justify-center">
-            <div class="text-center text-white">
-              <div class="w-32 h-32 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Icon name="user" class="w-16 h-16 text-white" />
+    <!-- Container with 80% height and 10% margins -->
+    <div class="flex w-full h-full items-center">
+      <div class="flex w-full flex h-full">
+        <!-- Profile Image - Takes up left side -->
+        <div class="w-1/3 pr-12 flex items-center justify-center">
+          <div class="w-full h-full rounded-2xl overflow-hidden shadow-xl">
+            <div class="w-full h-full bg-gray-900 flex items-center justify-center">
+              <div class="text-center text-white">
+                <div class="w-32 h-32 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Icon name="user" class="w-16 h-16 text-white" />
+                </div>
+                <p class="text-xl font-medium">Professional Portrait</p>
               </div>
-              <p class="text-xl font-medium">Professional Portrait</p>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Profile Information - Takes up right side -->
-      <div class="flex-1 flex flex-col justify-center">
+        <!-- Profile Information - Takes up right side -->
+        <div class="w-2/3 flex flex-col justify-center h-full">
         <!-- Header with Plus Icon -->
         <div class="flex items-center mb-8">
           <div class="w-7 h-7 bg-yellow-400 rounded flex items-center justify-center mr-4">
@@ -41,13 +43,14 @@
           </div>
         </button>
 
-        <!-- Info Cards -->
-        <div class="flex space-x-8 h-1/3">
-          <InfoCard
-            v-for="(infoCard, index) in profile.infoCards"
-            :key="index"
-            :info="infoCard"
-          />
+                 <!-- Info Cards -->
+         <div class="flex space-x-6 h-full mt-8">
+           <InfoCard
+             v-for="(infoCard, index) in profile.infoCards"
+             :key="index"
+             :info="infoCard"
+           />
+         </div>
         </div>
       </div>
     </div>
