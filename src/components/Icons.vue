@@ -31,8 +31,10 @@
 </template>
 
 <script setup lang="ts">
+import type { IconName } from '../types'
+
 interface Props {
-  name: 'home' | 'user' | 'cog' | 'heart' | 'lightbulb' | 'star' | 'globe' | 'x-mark' | 'arrow-right'
+  name: IconName
   class?: string
 }
 
