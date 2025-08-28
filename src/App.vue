@@ -64,14 +64,20 @@ import type { IconData, Card, PanelButton, ProfileData } from './types'
 const profileData: ProfileData = {
   name: 'David Giant ®',
   description: 'David is a licensed CPA based in California, backed by years of experience in tax advisory, financial planning, and business structuring. With a deep understanding of California state laws and federal tax regulations, David is committed to offering transparent, compliant, and strategic financial guidance for both individuals and corporations.',
-  license: {
-    title: 'License Number',
-    value: 'California CPA #54337'
-  },
-  location: {
-    title: 'Location',
-    value: 'Newport Beach, CA'
-  }
+  infoCards: [
+    {
+      title: 'License Number',
+      value: 'California CPA #54337',
+      description: 'Licensed Certified Public Accountant with active status in California. Certified to provide comprehensive financial services including tax preparation, auditing, and financial planning.',
+      iconName: 'cog'
+    },
+    {
+      title: 'Location',
+      value: 'Newport Beach, CA',
+      description: 'Strategically located in Orange County, providing convenient access to clients throughout Southern California. Available for both in-person and virtual consultations.',
+      iconName: 'globe'
+    }
+  ]
 }
 
 // Cards data

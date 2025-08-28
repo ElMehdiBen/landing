@@ -42,28 +42,12 @@
         </button>
 
         <!-- Info Cards -->
-        <div class="flex space-x-8">
-          <!-- License Number Card -->
-          <div class="bg-gray-50 rounded-2xl p-6 flex-1">
-            <div class="flex items-center mb-3">
-              <div class="w-6 h-6 bg-gray-400 rounded mr-3 flex items-center justify-center">
-                <Icon name="cog" class="w-4 h-4 text-white" />
-              </div>
-            </div>
-            <h3 class="font-semibold text-gray-900 mb-2 text-lg">{{ profile.license.title }}</h3>
-            <p class="text-gray-600">{{ profile.license.value }}</p>
-          </div>
-
-          <!-- Location Card -->
-          <div class="bg-gray-50 rounded-2xl p-6 flex-1">
-            <div class="flex items-center mb-3">
-              <div class="w-6 h-6 bg-gray-400 rounded mr-3 flex items-center justify-center">
-                <Icon name="globe" class="w-4 h-4 text-white" />
-              </div>
-            </div>
-            <h3 class="font-semibold text-gray-900 mb-2 text-lg">{{ profile.location.title }}</h3>
-            <p class="text-gray-600">{{ profile.location.value }}</p>
-          </div>
+        <div class="flex space-x-8 h-1/3">
+          <InfoCard
+            v-for="(infoCard, index) in profile.infoCards"
+            :key="index"
+            :info="infoCard"
+          />
         </div>
       </div>
     </div>
@@ -72,6 +56,7 @@
 
 <script setup lang="ts">
 import Icon from './Icons.vue'
+import InfoCard from './InfoCard.vue'
 import type { ProfileData } from '../types'
 
 interface Props {

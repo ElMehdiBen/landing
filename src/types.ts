@@ -30,14 +30,14 @@ export interface PanelButton {
 export interface ProfileData {
   name: string
   description: string
-  license: {
-    title: string
-    value: string
-  }
-  location: {
-    title: string
-    value: string
-  }
+  infoCards: InfoCardData[]
+}
+
+export interface InfoCardData {
+  title: string
+  value: string
+  description: string
+  iconName: IconName
 }
 
 export type IconName = 'home' | 'user' | 'cog' | 'heart' | 'lightbulb' | 'star' | 'globe' | 'x-mark' | 'arrow-right' 
