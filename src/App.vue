@@ -9,9 +9,9 @@
         <!-- Single Flip Icon Button (visible on both sides) -->
         <button @click="flipContainer"
           :class="[
-            'absolute top-6 right-6 z-30 w-12 h-12 rounded-xl shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 hover:scale-105',
+            'absolute top-10 right-10 z-30 w-10 h-10 rounded-xl shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 hover:scale-105',
             isContainerFlipped 
-              ? 'bg-white bg-opacity-20 border border-white border-opacity-30 hover:bg-opacity-30' 
+              ? `bg-yellow-400 border border-white hover:bg-yellow-400` 
               : 'bg-gray-900 border border-gray-800 hover:bg-gray-800'
           ]">
           <Icon

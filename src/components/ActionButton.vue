@@ -8,9 +8,17 @@
     @click="$emit('click')"
   >
     <div
-      class="w-16 h-16 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 hover:bg-gray-50"
+      :class="[
+        'w-12 h-12 rounded-xl shadow-md hover:shadow-lg flex items-center justify-center transition-all duration-300',
+        variant === 'header' 
+          ? 'bg-gray-900 hover:bg-gray-800 border border-gray-700' 
+          : 'bg-white border border-gray-200 hover:bg-gray-50'
+      ]"
     >
-      <Icon :name="iconName" class="w-6 h-6 text-gray-600" />
+             <Icon 
+         :name="iconName" 
+         :class="`w-5 h-5 ${props.variant === 'header' ? 'text-white' : 'text-gray-600'}`"
+       />
     </div>
   </div>
 </template>
@@ -22,6 +30,7 @@ import type { IconName } from '../types'
 interface Props {
   iconName: IconName
   animationDelay?: string
+  variant?: 'default' | 'header'
 }
 
 interface Emits {
@@ -29,7 +38,8 @@ interface Emits {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  animationDelay: '0s'
+  animationDelay: '0s',
+  variant: 'default'
 })
 
 const emit = defineEmits<Emits>()
